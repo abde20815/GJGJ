@@ -1,0 +1,84 @@
+{
+  "version": "1.0",
+  "description": "Règles cadastrales extraites du savoir-faire humain ANCFCC",
+  "rules": {
+    "RIVERAINS_MID_SEGMENT_PARALLEL": {
+      "description": "Texte de riverain placé au milieu entre deux bornes, parallèle à la limite",
+      "target_layer": "riverain",
+      "position_ratio": 0.5,
+      "perpendicular_offset_m": 5.96,
+      "rotation_mode": "parallel_to_boundary",
+      "readability_flip": true,
+      "text_height": 2.0,
+      "confidence": 0.99,
+      "occurrences_observed": 34
+    },
+    "BORNE_EXTERIOR_BISECTOR": {
+      "description": "Numéro de borne placé le long de la bissectrice extérieure pour zéro collision",
+      "target_layer": "BRNS",
+      "default_offset_m": 1.6,
+      "block_name": "borne_plantee",
+      "text_height": 1.8,
+      "confidence": 1.0,
+      "occurrences_observed": 11
+    },
+    "BORNES_RAPPROCHEES_STAGGER": {
+      "description": "Si distance < 2.5m entre deux bornes, échelonnement alternatif + trait de rappel",
+      "threshold_distance_m": 2.5,
+      "stagger_offsets_m": [
+        1.8,
+        3.8
+      ],
+      "draw_leader_line": true,
+      "leader_layer": "0",
+      "confidence": 0.98
+    },
+    "GRID_CROISILLONS_100M": {
+      "description": "Grille de carroyage à pas de 100m entiers avec bloc CROISI et textes en bordure",
+      "grid_step_m": 100.0,
+      "block_name": "CROISI",
+      "coordinate_text_height": 2.0,
+      "coordinate_layer": "0",
+      "confidence": 1.0
+    },
+    "CENTROID_CONTENANCE_LABEL": {
+      "description": "Titre et Contenance placés au centre de gravité de la parcelle",
+      "target_layer": "CENTROIDE",
+      "format": "{parcel_id}\\PContenance : {contenance_ha_a_ca}",
+      "char_height": 2.5,
+      "confidence": 1.0
+    },
+    "PUIT_EXPLODE_RULE": {
+      "description": "Explosion normalisée des blocs 'puit' en entités natives CIRCLE et LWPOLYLINE sur calque 'puits'",
+      "target_layer": "puits",
+      "action": "explode_block_insert",
+      "retained_types": ["CIRCLE", "LWPOLYLINE"],
+      "confidence": 1.0,
+      "occurrences_observed": 4
+    },
+    "TREE_POPULATION_CULTURE_GATE": {
+      "description": "Peuplement d'arbres conditionné strictement par la présence de culture arborée (TC+Olivier, arbres) et graines >= 2",
+      "target_layer": "arbres",
+      "tree_keywords": ["olivier", "arbres", "fruitier", "abricot", "amandier", "palmier", "figuier", "vigne"],
+      "min_seed_trees": 2,
+      "spacing_paper_mm": {"1000": 19.0, "2000": 13.0},
+      "isolated_seed_tree_action": "destroy",
+      "confidence": 1.0,
+      "occurrences_observed": 20
+    },
+    "SECTOR_BOUNDARY_LAYER_DTLS": {
+      "description": "Limites rayonnantes des enclaves cadastrées voisines tracées strictement sur calque 'dtls'",
+      "target_layer": "dtls",
+      "color": 0,
+      "confidence": 1.0,
+      "occurrences_observed": 18
+    },
+    "ROAD_CHAABA_ISOLATED_PURGE": {
+      "description": "Suppression des polylignes de voirie/chaaba non en contact direct avec la parcelle au profit de l'annotation texte",
+      "target_layers": ["chaaba", "piste", "routes", "chemin"],
+      "max_contact_distance_m": 0.5,
+      "confidence": 0.98,
+      "occurrences_observed": 15
+    }
+  }
+}
